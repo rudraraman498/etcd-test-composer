@@ -1,0 +1,39 @@
+Client container output log:
+
+Attaching to client, etcd0, etcd1, etcd2
+{trucated}
+etcd1  | {"level":"info","ts":"2026-05-28T21:43:11.764Z","caller":"rafthttp/stream.go:274","msg":"established TCP streaming connection with remote peer","stream-writer-type":"stream MsgApp v2","local-member-id":"99eab3685d8363a1","remote-peer-id":"dcb68c82481661be"}
+etcd0  | {"level":"info","ts":"2026-05-28T21:43:11.781Z","caller":"etcdserver/server.go:767","msg":"initialized peer connections; fast-forwarding election ticks","local-member-id":"2c6c7b8d0d0933f7","forward-ticks":8,"forward-duration":"800ms","election-ticks":10,"election-timeout":"1s","active-remote-members":2}
+etcd2  | {"level":"info","ts":"2026-05-28T21:43:11.806Z","caller":"etcdserver/server.go:767","msg":"initialized peer connections; fast-forwarding election ticks","local-member-id":"dcb68c82481661be","forward-ticks":8,"forward-duration":"800ms","election-ticks":10,"election-timeout":"1s","active-remote-members":2}
+{trucated}
+client  | Client [entrypoint]: starting...
+client  | Client [entrypoint]: checking cluster health...
+etcd0   | {"level":"info","ts":"2026-05-28T21:43:12.220Z","logger":"raft","caller":"etcdserver/zap_raft.go:77","msg":"2c6c7b8d0d0933f7 is starting a new election at term 1"}
+etcd0   | {"level":"info","ts":"2026-05-28T21:43:12.221Z","logger":"raft","caller":"etcdserver/zap_raft.go:77","msg":"2c6c7b8d0d0933f7 became pre-candidate at term 1"}
+{trucated}
+etcd2   | {"level":"info","ts":"2026-05-28T21:43:12.234Z","caller":"membership/cluster.go:531","msg":"set initial cluster version","cluster-id":"3f51d2f720a184e6","local-member-id":"dcb68c82481661be","cluster-version":"3.5"}
+etcd1   | {"level":"info","ts":"2026-05-28T21:43:12.234Z","caller":"api/capability.go:75","msg":"enabled capabilities for version","cluster-version":"3.5"}
+etcd2   | {"level":"info","ts":"2026-05-28T21:43:12.234Z","caller":"api/capability.go:75","msg":"enabled capabilities for version","cluster-version":"3.5"}
+client  | Client [entrypoint]: connection successful with etcd0
+client  | Client [entrypoint]: connection successful with etcd1
+client  | Client [entrypoint]: connection successful with etcd2
+client  | Client [entrypoint]: cluster is healthy!
+
+
+Testcase run messages:
+
+Assertion output will be sent to: "/tmp/anytime_assertions.json"
+
+anytime: starting watch revision check
+Client: connected to etcd2
+Client: connected to etcd0
+anytime: collected 5 watch events
+anytime: watch revision check complete
+
+
+ANTITHESIS_SDK_LOCAL_OUTPUT json:
+
+{"antithesis_sdk": {"language": {"name": "Python", "version": "3.14.4 (main, Apr  8 2026, 04:02:31) [GCC 15.2.0]"}, "sdk_version": "0.2.0", "protocol_version": "1.0.0"}}
+{"antithesis_assert": {"condition": true, "must_hit": true, "hit": true, "id": "Anytime watch check collected enough events to verify ordering", "message": "Anytime watch check collected enough events to verify ordering", "display_type": "Sometimes", "assert_type": "sometimes", "location": {"file": "/opt/antithesis/test/v1/main/anytime_watch_header_monotonic.py", "function": "<module>", "class": "", "begin_line": 98, "begin_column": 0}, "details": {"event_count": 5}}}
+{"antithesis_assert": {"condition": true, "must_hit": true, "hit": true, "id": "Watch event ordering check is being performed", "message": "Watch event ordering check is being performed", "display_type": "Reachable", "assert_type": "reachability", "location": {"file": "/opt/antithesis/test/v1/main/anytime_watch_header_monotonic.py", "function": "<module>", "class": "", "begin_line": 106, "begin_column": 0}, "details": {"event_count": 5}}}
+{"antithesis_assert": {"condition": true, "must_hit": true, "hit": true, "id": "Watch events are delivered in monotonically non-decreasing revision order", "message": "Watch events are delivered in monotonically non-decreasing revision order", "display_type": "Always", "assert_type": "always", "location": {"file": "/opt/antithesis/test/v1/main/anytime_watch_header_monotonic.py", "function": "check_revision_ordering", "class": "", "begin_line": 77, "begin_column": 0}, "details": {"event_index": 1, "prev_key": "anytime-watch/9E1x5CF6", "prev_mod_revision": 59, "curr_key": "anytime-watch/6QEATvW8", "curr_mod_revision": 60}}}

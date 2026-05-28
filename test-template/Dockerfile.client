@@ -53,12 +53,15 @@ COPY ./python-generate-traffic/parallel_driver_generate_traffic.py /opt/antithes
 # Copying additional resources into a resources folder
 COPY ./python-generate-traffic/resources/helper.py /opt/antithesis/resources/helper.py
 
+COPY ./python-generate-traffic/anytime_watch_header_monotonic.py /opt/antithesis/test/v1/main/anytime_watch_header_monotonic.py
+RUN chmod +x /opt/antithesis/test/v1/main/anytime_watch_header_monotonic.py
+
 
 # GO:
 
 # Install go
-RUN wget https://golang.org/dl/go1.22.5.linux-amd64.tar.gz
-RUN tar -C /usr/local -xzf go1.22.5.linux-amd64.tar.gz
+RUN wget https://golang.org/dl/go1.22.5.linux-arm64.tar.gz
+RUN tar -C /usr/local -xzf go1.22.5.linux-arm64.tar.gz
 ENV PATH=$PATH:/usr/local/go/bin 
 
 # Copying go script and building an executable into Test Composer directory
